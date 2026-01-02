@@ -16,6 +16,7 @@ interface Student {
   active: boolean;
   start_date: string;
   notes: string | null;
+  attendace_token: string;
 }
 
 export default function StudentListPage() {
