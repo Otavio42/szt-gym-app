@@ -41,6 +41,7 @@ export default function ScanQRCodePage() {
             .single();
 
           if (error) {
+            console.log(error);
             setErrorMsg('Student not found!');
             setStudent(null);
           } else {
