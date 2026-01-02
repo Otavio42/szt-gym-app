@@ -37,7 +37,7 @@ export default function ScanQRCodePage() {
           const { data, error } = await supabase
             .from('Students')
             .select('id, first_name, last_name')
-            .eq('id', decodedText)
+            .eq('attendance_token', decodedText)
             .single();
 
           if (error) {
