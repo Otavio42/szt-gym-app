@@ -18,6 +18,7 @@ interface Student {
   notes: string | null;
   created_at: string;
   updated_at: string;
+  attendance_token: string;
 }
 
 export default function StudentDetailPage() {
