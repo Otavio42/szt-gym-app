@@ -92,7 +92,7 @@ export default function StudentDetailPage() {
 
           <div className="inline-block bg-white p-2">
             <QRCode
-              value={`student:${student.id}`}
+              value={student.attendance_token}
               size={160}
             />
           </div>
