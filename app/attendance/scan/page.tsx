@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Html5Qrcode } from 'html5-qrcode';
-import { supabase } from '../../../lib/supabaseClient';
+import { supabase } from '@/lib/supabaseClient';
 
 interface Student {
   id: number;
