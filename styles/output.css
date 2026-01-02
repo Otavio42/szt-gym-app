@@ -4,8 +4,17 @@
 body {
   font-family: 'Roboto', sans-serif;
 }
+.visible {
+  visibility: visible;
+}
+.static {
+  position: static;
+}
 .flex {
   display: flex;
+}
+.hidden {
+  display: none;
 }
 .inline-block {
   display: inline-block;
@@ -24,6 +33,9 @@ body {
 }
 .table-auto {
   table-layout: auto;
+}
+.resize {
+  resize: both;
 }
 .flex-col {
   flex-direction: column;

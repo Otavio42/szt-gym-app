@@ -11,6 +11,8 @@ interface Student {
 }
 
 export default function ScanQRCodePage() {
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_KEY;
+
   const qrRegionId = 'qr-scanner';
   const html5QrcodeScanner = useRef<Html5Qrcode | null>(null);
 
@@ -33,22 +35,33 @@ export default function ScanQRCodePage() {
           // Stop scanning
           html5QrcodeScanner.current?.stop().catch(console.error);
 
-          // Fetch student from Supabase
-          const { data, error } = await supabase
-            .from('Students')
-            .select('id, first_name, last_name')
-            .eq('attendance_token', decodedText)
-            .single();
+          try {
+            // Call the Edge Function
+            const res = await fetch(
+              'https://qboudwfpuclpvsmyorcj.supabase.co/functions/v1/register-attendance',
+              {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${supabaseAnonKey}`,
+                  'apikey': supabaseAnonKey,
+                },
+                body: JSON.stringify({ token: decodedText }),
+              }
+            );
 
-          if (error) {
-            console.log(error);
-            setErrorMsg('Student not found!');
+            const json = await res.json();
+
+            if (res.ok) {
+              setStudent(json.student);
+              setErrorMsg('');
+            } else {
+              setStudent(null);
+              setErrorMsg(json.error || 'Student not found');
+            }
+          } catch (err) {
             setStudent(null);
-          } else {
-            setStudent(data);
-            setErrorMsg('');
-            // TODO: register attendance automatically
-            // await supabase.from('Attendance').insert({ student_id: data.id, date: new Date() });
+            setErrorMsg('Failed to contact server');
           }
         },
         (errorMessage) => {
