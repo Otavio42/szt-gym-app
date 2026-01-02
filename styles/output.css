@@ -10,6 +10,9 @@ body {
 .inline-block {
   display: inline-block;
 }
+.aspect-square {
+  aspect-ratio: 1 / 1;
+}
 .min-h-screen {
   min-height: 100vh;
 }
